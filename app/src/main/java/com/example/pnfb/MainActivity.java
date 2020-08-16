@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText wc;
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText alb;
     private Button pnfbScore;
     private TextView result;
+    private TextView senResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         alb = (EditText) findViewById(R.id.alb);
         pnfbScore = (Button) findViewById(R.id.score);
         result = (TextView) findViewById(R.id.result);
+        senResult = (TextView) findViewById(R.id.sensitivityResult);
 
         pnfbScore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
                 double pNFB = 2.564 + (0.049 * wC) + (0.005 * tG) + (0.016 * aST) - (0.578 * aLB);
                 double sensitivity = 0;
                 double specificity = 0;
+
+                DecimalFormat df = new DecimalFormat("###.###");
 
                 if (pNFB >= 2.193 && pNFB < 3.287801) {
                     sensitivity = (1 * 100);
@@ -297,7 +303,8 @@ public class MainActivity extends AppCompatActivity {
                     specificity = 999;
                 }
 
-                result.setText(String.valueOf("Sensitivity: " + sensitivity + "\nSpecificity: " + specificity));
+                result.setText(String.valueOf("PNFB Score: " + df.format(pNFB)));
+                senResult.setText(String.valueOf("Sensitivity: " + sensitivity + "\nSpecificity: " + specificity));
             }
         });
 
